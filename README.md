@@ -1,77 +1,74 @@
-# Invoice Extraction & Verification Pipeline
+# Structured LLM Extractor
 
-A hybrid Python and AI-based invoice processing system that extracts structured information from invoice text, validates the data, and uses a local Large Language Model (LLM) for verification.
+A Python-based invoice extraction pipeline that extracts structured information from unstructured invoice text, validates it using Pydantic, and uses a local LLM for AI-assisted verification.
 
-## 🚀 Project Overview
+## Overview
 
-This project demonstrates how structured information can be extracted from unstructured invoice documents using Python and verified with an LLM.
+This project demonstrates how Large Language Models (LLMs) can be integrated into a Python application to extract and verify structured information from unstructured documents.
 
-It combines rule-based extraction with AI-assisted verification to produce structured JSON output.
+It combines rule-based extraction, data validation, and AI-assisted verification to produce structured JSON output.
 
-## ✨ Features
+## Features
 
-- Extracts vendor name, invoice number, total amount, and payment status.
-- Uses Python regular expressions for information extraction.
-- Validates extracted data using Pydantic.
-- Integrates Ollama API with the Llama 3.2 (1B) model for AI-assisted verification.
-- Handles missing invoice information.
-- Includes automated tests using Pytest.
+- **Structured Data Extraction:** Extracts vendor name, invoice number, total amount, and payment status.
+- **Regex-Based Processing:** Uses regular expressions to identify relevant invoice information.
+- **Pydantic Validation:** Validates extracted data against a defined schema and constraints.
+- **AI-Assisted Verification:** Uses Ollama with the Llama 3.2 (1B) model to check whether extracted values are supported by the original invoice text.
+- **JSON Output:** Produces structured JSON containing the extracted invoice fields.
+- **Error Handling:** Handles missing files, invalid data, and Ollama connection errors.
+- **Automated Testing:** Includes pytest tests for extraction and verification functionality.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Technology | Purpose |
 |---|---|
-| Python | Core application and extraction logic |
-| Ollama | Local LLM API integration |
-| Llama 3.2 (1B) | AI-assisted verification |
-| Pydantic | Data validation |
-| Regular Expressions | Rule-based extraction |
+| Python | Core programming language |
+| Regular Expressions | Rule-based information extraction |
+| Pydantic | Data validation and schema enforcement |
+| Ollama | Local LLM integration |
+| Llama 3.2 (1B) | AI-assisted invoice verification |
 | Pytest | Automated testing |
 
-## ⚙️ How It Works
+## How It Works
 
-1. **Read:** Load the invoice text from a file.
-2. **Extract:** Use Python to identify the required invoice fields.
-3. **Validate:** Validate the extracted data using Pydantic.
-4. **Verify:** Send the original invoice and extracted values to Ollama for AI-assisted verification.
-5. **Output:** Display the structured JSON and verification results.
+1. The application reads the invoice text from `invoice.txt`.
+2. Regular expressions extract the required invoice fields.
+3. Pydantic validates the extracted information.
+4. The extracted values and original invoice text are sent to the local Ollama model for verification.
+5. The verification response is validated using a Pydantic model.
+6. The application displays the final structured JSON output.
 
-## 📁 Project Structure
+## Project Structure
 
 ```text
-invoice-extraction-pipeline/
+structured-llm-extractor/
 ├── main.py
-├── test_main.py
 ├── invoice.txt
+├── test_main.py
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
-## 💻 Installation & Setup
-
-### Prerequisites
-
-- Python 3.10 or later
-- Ollama installed and running
+## Installation and Setup
 
 ### 1. Clone the repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
-cd invoice-extraction-pipeline
+git clone https://github.com/shawnmcconnell0801/structured-llm-extractor.git
+cd structured-llm-extractor
 ```
 
-### 2. Create a virtual environment
+### 2. Create and activate a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-Activate it on Windows PowerShell:
+On Windows:
 
-```powershell
-.\venv\Scripts\Activate.ps1
+```bash
+venv\Scripts\activate
 ```
 
 ### 3. Install dependencies
@@ -80,44 +77,53 @@ Activate it on Windows PowerShell:
 pip install -r requirements.txt
 ```
 
-### 4. Download the LLM
+### 4. Install and start Ollama
+
+Download and install [Ollama](https://ollama.com/).
+
+Pull the required model:
 
 ```bash
 ollama pull llama3.2:1b
 ```
 
-Ensure Ollama is running before proceeding.
+Make sure the Ollama service is running before executing the application.
 
-### 5. Run the application
+## Running the Application
+
+Run the following command from the project directory:
 
 ```bash
 python main.py
 ```
 
-## 🧪 Running Tests
+The application reads the invoice from `invoice.txt`, processes it, and displays the extracted information as JSON.
 
-Execute the automated test suite:
+## Running Tests
+
+Execute the test suite using:
 
 ```bash
-pytest -v
+pytest
 ```
 
-## ⚠️ Limitations
+The tests cover successful extraction, missing fields, validation, and AI-assisted verification.
 
-- Extraction currently supports specific invoice text formats.
-- Scanned documents require OCR before processing.
-- AI verification is advisory and may occasionally produce inconsistent results.
-- Pydantic validates data structure and constraints, not factual correctness.
+## Limitations
 
-## 🔮 Future Improvements
+- The current extraction logic supports a limited set of invoice text formats and field labels.
+- Scanned invoices and image-based documents require OCR, which is not currently implemented.
+- AI-assisted verification is advisory and may occasionally produce inaccurate results.
+- Pydantic validates data structure and constraints; it does not independently establish whether extracted information is factually correct.
 
-- Support additional invoice formats.
-- Integrate OCR for scanned invoices.
-- Improve extraction flexibility.
-- Add deterministic verification checks.
-- Develop a user interface for invoice uploads.
+## Future Improvements
 
-## 👨‍💻 Author
+- Support additional invoice layouts and formats.
+- Integrate OCR for scanned invoices and images.
+- Improve deterministic validation and verification.
+- Extend extraction to other document types, such as resumes and receipts.
+- Develop a user interface for document uploads and extraction results.
 
-Developed as part of the DAtheon AI Internship.
+---
 
+**Developed as part of the DAtheon AI Internship.**
